@@ -11,7 +11,9 @@ import javax.swing.SwingConstants;
 import entidad.Persona;
 
 import java.awt.event.ActionListener;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class VentanaPrincipal extends JFrame{
 	
@@ -19,10 +21,12 @@ public class VentanaPrincipal extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	public VentanaPrincipal(DefaultListModel<Persona> listModel) {
+		
 		setTitle("Programa");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		this.setSize(800,400);
+		
+		contentPane = (JPanel) getContentPane();
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -34,7 +38,7 @@ public class VentanaPrincipal extends JFrame{
 		mntmAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				contentPane.removeAll();
-				PanelAgregarPersonas panelAgregar= new PanelAgregarPersonas();
+				PanelAgregarPersonas panelAgregar= new PanelAgregarPersonas(listModel);
 				panelAgregar.setDefaultListModel(listModel);
 				contentPane.add(panelAgregar);
 				contentPane.repaint();
@@ -55,11 +59,9 @@ public class VentanaPrincipal extends JFrame{
 		JMenuItem mntmListar = new JMenuItem("Listar");
 		mntmListar.setHorizontalAlignment(SwingConstants.LEFT);
 		mnNewMenu.add(mntmListar);
+		getContentPane().setLayout(null);
 		
 
 		
 	}
-
-	
-
 }
