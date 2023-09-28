@@ -1,11 +1,8 @@
 package main;
 
-
-import java.awt.EventQueue;
-
 import javax.swing.DefaultListModel;
-
 import entidad.Persona;
+import presentacion.controlador.Controlador;
 import presentacion.vista.VentanaPrincipal;
 
 public class Principal {
@@ -14,7 +11,13 @@ public class Principal {
 
 	public static void main(String[] args) {
 		
-		EventQueue.invokeLater(new Runnable() {
+		VentanaPrincipal frame = new VentanaPrincipal(listModel);
+		frame.setVisible(true);
+		
+		Controlador controlador = new Controlador(frame, listModel);
+		controlador.inicializar();
+		
+		/*EventQueue.invokeLater(new Runnable() {
 			
 			public void run() {
 				
@@ -28,8 +31,6 @@ public class Principal {
 					e.printStackTrace();
 				}
 			}
-		});
-
+		});*/
 	}
-
 }

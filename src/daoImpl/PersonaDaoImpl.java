@@ -6,7 +6,6 @@ import entidad.Persona;
 
 public class PersonaDaoImpl implements PersonaDao {
 	
-
 	@Override
 	public boolean insert(Persona persona) {
 		
@@ -24,7 +23,4 @@ public class PersonaDaoImpl implements PersonaDao {
 		
 		return null;
 	}
-
-	
-	
 }

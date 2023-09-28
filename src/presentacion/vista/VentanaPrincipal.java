@@ -1,15 +1,5 @@
 package presentacion.vista;
 
-<<<<<<< HEAD
-import javax.swing.JFrame;
-
-public class VentanaPrincipal extends JFrame{
-	
-	private static final long serialVersionUID = 1L;
-
-	public VentanaPrincipal() {
-	}
-=======
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -17,19 +7,20 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
->>>>>>> origin/main
 
 import entidad.Persona;
 
-import java.awt.event.ActionListener;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-
 public class VentanaPrincipal extends JFrame{
 	
-	private JPanel contentPane;
 	private static final long serialVersionUID = 1L;
+	
+	private JPanel contentPane;
+	private JMenuBar menuBar;
+	private JMenu mnNewMenu;
+	private JMenuItem mntmAgregar;
+	private JMenuItem mntmModificar;
+	private JMenuItem mntmEliminar;
+	private JMenuItem mntmListar;
 	
 	public VentanaPrincipal(DefaultListModel<Persona> listModel) {
 		
@@ -39,40 +30,69 @@ public class VentanaPrincipal extends JFrame{
 		
 		contentPane = (JPanel) getContentPane();
 		
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
-		JMenu mnNewMenu = new JMenu("Persona");
+
+		mnNewMenu = new JMenu("Persona");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmAgregar = new JMenuItem("Agregar");
-		mntmAgregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				contentPane.removeAll();
-				PanelAgregarPersonas panelAgregar= new PanelAgregarPersonas(listModel);
-				panelAgregar.setDefaultListModel(listModel);
-				contentPane.add(panelAgregar);
-				contentPane.repaint();
-				contentPane.revalidate();
-			}
-		});
+		mntmAgregar = new JMenuItem("Agregar");
 		mntmAgregar.setHorizontalAlignment(SwingConstants.LEFT);
 		mnNewMenu.add(mntmAgregar);
 		
-		JMenuItem mntmModificar = new JMenuItem("Modificar");
+		mntmModificar = new JMenuItem("Modificar");
 		mntmModificar.setHorizontalAlignment(SwingConstants.LEFT);
 		mnNewMenu.add(mntmModificar);
 		
-		JMenuItem mntmEliminar = new JMenuItem("Eliminar");
+		mntmEliminar = new JMenuItem("Eliminar");
 		mntmEliminar.setHorizontalAlignment(SwingConstants.LEFT);
 		mnNewMenu.add(mntmEliminar);
 		
-		JMenuItem mntmListar = new JMenuItem("Listar");
+		mntmListar = new JMenuItem("Listar");
 		mntmListar.setHorizontalAlignment(SwingConstants.LEFT);
 		mnNewMenu.add(mntmListar);
+		
 		getContentPane().setLayout(null);
-		
+	}
+	
+	
+	public JMenu getMnNewMenu() {
+		return mnNewMenu;
+	}
 
-		
+	public void setMnNewMenu(JMenu mnNewMenu) {
+		this.mnNewMenu = mnNewMenu;
+	}
+	
+	public JMenuItem getMntmAgregar() {
+		return mntmAgregar;
+	}
+	
+	public void setMntmAgregar(JMenuItem mntmAgregar) {
+		this.mntmAgregar = mntmAgregar;
+	}
+
+	public JMenuItem getMntmModificar() {
+		return mntmModificar;
+	}
+
+	public void setMntmModificar(JMenuItem mntmModificar) {
+		this.mntmModificar = mntmModificar;
+	}
+
+	public JMenuItem getMntmEliminar() {
+		return mntmEliminar;
+	}
+
+	public void setMntmEliminar(JMenuItem mntmEliminar) {
+		this.mntmEliminar = mntmEliminar;
+	}
+
+	public JMenuItem getMntmListar() {
+		return mntmListar;
+	}
+
+	public void setMntmListar(JMenuItem mntmListar) {
+		this.mntmListar = mntmListar;
 	}
 }

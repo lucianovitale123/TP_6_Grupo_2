@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-=======
-/dao/
 /daoImpl/
-/entidad/
+/presentacion/
 /main/
 /negocio/
 /negocioImpl/
->>>>>>> origin/main
-/presentacion/
