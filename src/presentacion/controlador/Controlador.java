@@ -25,7 +25,7 @@ public class Controlador {
 		this.listModel = listModel1;
 				
 		//Instancio los paneles
-		this.pnlAgregarPersonas = new PanelAgregarPersonas(null);
+		this.pnlAgregarPersonas = new PanelAgregarPersonas(listModel);
 		
 		//Enlazo todos los eventos
 		//Eventos del menu VentanaPrincipal

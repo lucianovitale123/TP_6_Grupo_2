@@ -95,4 +95,5 @@ public class VentanaPrincipal extends JFrame{
 	public void setMntmListar(JMenuItem mntmListar) {
 		this.mntmListar = mntmListar;
 	}
+	
 }
