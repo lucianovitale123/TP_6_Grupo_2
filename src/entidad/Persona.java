@@ -1,22 +1,22 @@
 package entidad;
 
 public class Persona {
-	private int dni;
+	private String dni;
 	private String nombre;
 	private String apellido;
 	
 	public Persona() {};
 	
-	public Persona(int dni, String nombre, String apellido) {
+	public Persona(String dni, String nombre, String apellido) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
 	}
 	
-	public int getDni() {
+	public String getDni() {
 		return dni;
 	}
-	public void setDni(int dni) {
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	public String getNombre() {
@@ -37,12 +37,14 @@ public class Persona {
 		return apellido + ", " + nombre +" " + dni;
 	}
 
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
-		result = prime * result + dni;
+		result = prime * result + ((dni == null) ? 0 : dni.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
 	}
@@ -61,7 +63,10 @@ public class Persona {
 				return false;
 		} else if (!apellido.equals(other.apellido))
 			return false;
-		if (dni != other.dni)
+		if (dni == null) {
+			if (other.dni != null)
+				return false;
+		} else if (!dni.equals(other.dni))
 			return false;
 		if (nombre == null) {
 			if (other.nombre != null)

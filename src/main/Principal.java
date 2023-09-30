@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.DefaultListModel;
 import entidad.Persona;
+import negocio.PersonaNegocio;
+import negocioImpl.NegocioImpl;
 import presentacion.controlador.Controlador;
 import presentacion.vista.VentanaPrincipal;
 
@@ -17,12 +19,16 @@ public class Principal {
 			
 			public void run() {
 				try {
-					//INSTANCIO EL LISTMODEL
+					//INSTANCIO OBJETOS VISTA
 					listModel = new DefaultListModel<Persona>();
-					VentanaPrincipal frame = new VentanaPrincipal(listModel);
-					frame.setVisible(true);
+					VentanaPrincipal vista = new VentanaPrincipal(listModel);
+					vista.setVisible(true);
 					
-					Controlador controlador = new Controlador(frame, listModel);
+					//INSTANCIO OBJETO LOGICA
+					PersonaNegocio negocio = new NegocioImpl();
+					
+					//CONTROLADOR PARA UNIR VISTA Y LOGICA
+					Controlador controlador = new Controlador(vista, listModel, negocio);
 					controlador.inicializar();
 					
 				} catch (Exception e) {
