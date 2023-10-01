@@ -2,108 +2,63 @@ package presentacion.controlador;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import entidad.Persona;
-import negocio.PersonaNegocio;
-import negocioImpl.NegocioImpl;
 import presentacion.vista.PanelAgregarPersonas;
+import presentacion.vista.PanelModificarPersona;
 import presentacion.vista.VentanaPrincipal;
 
 public class Controlador {
 	
 	private VentanaPrincipal ventanaPrincipal;
-	private PersonaNegocio negocioImpl;
 	private PanelAgregarPersonas pnlAgregarPersonas;
+	private PanelModificarPersona pnlModificarPersona;
 	private DefaultListModel<Persona> listModel;
 	
-	public Controlador(VentanaPrincipal vista, DefaultListModel<Persona> listModel1, PersonaNegocio negocio) {
+	public Controlador(VentanaPrincipal vista, DefaultListModel<Persona> listModel1) {
 		//Guardo todas las instancias que recibo en el constructor
 		this.ventanaPrincipal = vista;
 		this.listModel = listModel1;
-		this.negocioImpl = negocio;
 				
 		//Instancio los paneles
 		this.pnlAgregarPersonas = new PanelAgregarPersonas(listModel);
+		this.pnlModificarPersona = new PanelModificarPersona(listModel);
 		
 		//Enlazo todos los eventos
 		//Eventos del menu VentanaPrincipal
 		this.ventanaPrincipal.getMntmAgregar().addActionListener(a->EventoClickMenu_AbrirPanel_AgregarPersona(a, listModel));
+		this.ventanaPrincipal.getMntmModificar().addActionListener(a->EventoClickMenu_AbrirPanel_ModificarPersona(a, listModel));
 		
 		//Eventos PnlAgregarPersonas
 		this.pnlAgregarPersonas.getBtnAceptar().addActionListener(b->EventoClickBoton_AgregarPesona_PanelAgregarPersonas(b));
-		this.pnlAgregarPersonas.getTxtNombre().addKeyListener(new KeyListener() {		
-
+		this.pnlAgregarPersonas.getTxtNombre().addMouseListener(new MouseAdapter() {
 			@Override
-			public void keyPressed(KeyEvent arg0) {
-				
+			public void mouseClicked(MouseEvent arg0) {
 				pnlAgregarPersonas.getTxtNombre().setBackground(Color.WHITE);
 				pnlAgregarPersonas.getValidatorNombre().setVisible(false);
 				pnlAgregarPersonas.getLblSucceed().setVisible(false);
 			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				
-				
-			}
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-			
-				
-			}
-
-
 		});
-		
-		this.pnlAgregarPersonas.getTxtApellido().addKeyListener(new KeyListener() {
-			
-			public void keyPressed(KeyEvent arg0) {
-			pnlAgregarPersonas.getTxtApellido().setBackground(Color.WHITE);
-			pnlAgregarPersonas.getValidatorApellido().setVisible(false);
-			pnlAgregarPersonas.getLblSucceed().setVisible(false);
-			}
-
+		this.pnlAgregarPersonas.getTxtApellido().addMouseListener(new MouseAdapter() {
 			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void mouseClicked(MouseEvent arg0) {
+				pnlAgregarPersonas.getTxtApellido().setBackground(Color.WHITE);
+				pnlAgregarPersonas.getValidatorApellido().setVisible(false);
+				pnlAgregarPersonas.getLblSucceed().setVisible(false);
 			}
 		});
-	
-		this.pnlAgregarPersonas.getTxtDNI().addKeyListener(new KeyListener() {
-			
-			public void keyPressed(KeyEvent arg0) {
+		this.pnlAgregarPersonas.getTxtDNI().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
 				pnlAgregarPersonas.getTxtDNI().setBackground(Color.WHITE);
 				pnlAgregarPersonas.getValidatorDNI().setVisible(false);
 				pnlAgregarPersonas.getLblSucceed().setVisible(false);
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-			
-				
-			}
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-				
-				
 			}
 		});
 		
@@ -118,6 +73,14 @@ public class Controlador {
 		ventanaPrincipal.getContentPane().revalidate();		
 	}
 	
+	public void  EventoClickMenu_AbrirPanel_ModificarPersona(ActionEvent a, DefaultListModel<Persona> listModel) {
+			ventanaPrincipal.getContentPane().removeAll();
+			ventanaPrincipal.getContentPane().add(pnlModificarPersona);
+			pnlModificarPersona.setDefaultListModel(listModel);
+			ventanaPrincipal.getContentPane().repaint();
+			ventanaPrincipal.getContentPane().revalidate();		
+		}
+	
 	public void EventoClickBoton_AgregarPesona_PanelAgregarPersonas(ActionEvent a) {
 		
 		JTextField txtNombre = this.pnlAgregarPersonas.getTxtNombre();
@@ -129,7 +92,6 @@ public class Controlador {
 		JLabel lblSucceed = this.pnlAgregarPersonas.getLblSucceed();
 		
 		int bandera = 0;
-		boolean estado = false;
 		validatorApellido.setText("*");
 		validatorDNI.setText("*");
 		validatorNombre.setText("*");
@@ -184,21 +146,10 @@ public class Controlador {
         }
         
         if(bandera == 0) {
-        	Persona persona = new Persona(txtDNI.getText(),txtNombre.getText(),txtApellido.getText());
-        	estado = negocioImpl.insert(persona);
-        	if(estado) {
-        		  lblSucceed.setVisible(true);
-                  txtDNI.setText("");
-                  txtApellido.setText("");
-                  txtNombre.setText("");
-        	}
-        	else {
-        		JOptionPane.showMessageDialog(null, "ERROR - DNI REPETIDO.");
-        		   txtDNI.setText("");
-                   txtApellido.setText("");
-                   txtNombre.setText("");
-        	}
-          
+            lblSucceed.setVisible(true);
+            txtDNI.setText("");
+            txtApellido.setText("");
+            txtNombre.setText("");
         }
 	}
 	

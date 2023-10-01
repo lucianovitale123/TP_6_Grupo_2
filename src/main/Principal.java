@@ -28,7 +28,7 @@ public class Principal {
 					PersonaNegocio negocio = new NegocioImpl();
 					
 					//CONTROLADOR PARA UNIR VISTA Y LOGICA
-					Controlador controlador = new Controlador(vista, listModel, negocio);
+					Controlador controlador = new Controlador(vista, listModel);
 					controlador.inicializar();
 					
 				} catch (Exception e) {

@@ -27,10 +27,15 @@ public class NegocioImpl implements PersonaNegocio{
 	@Override
 	public boolean delete(Persona persona_a_eliminar) {
 		boolean estado=false;
-		if(persona_a_eliminar.getDni().length() > 0 )//LOGICA
+		if(persona_a_eliminar.getDni().length() > 0)//LOGICA
 		{
-			estado=pdao.delete(persona_a_eliminar);
-		}
+			// Verifica que exista el DNI
+			ArrayList<Persona> listaPersonas = pdao.readAll();
+		    for (Persona persona : listaPersonas) {
+		        if (persona.getDni().equalsIgnoreCase(persona_a_eliminar.getDni())) {
+		       
+		        	estado=pdao.delete(persona_a_eliminar);
+		}}}
 		return estado;
 	}
 

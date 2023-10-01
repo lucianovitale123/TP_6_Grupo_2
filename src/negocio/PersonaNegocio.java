@@ -9,5 +9,5 @@ public interface PersonaNegocio {
 		public boolean insert (Persona persona);
 		public boolean delete (Persona persona);
 		public ArrayList<Persona> readAll();
-
+		boolean validarDNIRepetido(Persona persona);
 }
