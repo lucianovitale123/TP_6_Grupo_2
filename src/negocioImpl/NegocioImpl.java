@@ -1,7 +1,6 @@
 package negocioImpl;
 
 import java.util.ArrayList;
-
 import dao.PersonaDao;
 import daoImpl.PersonaDaoImpl;
 import entidad.Persona;
@@ -60,5 +59,4 @@ public class NegocioImpl implements PersonaNegocio{
 		return false;
 		
 	}
-
 }

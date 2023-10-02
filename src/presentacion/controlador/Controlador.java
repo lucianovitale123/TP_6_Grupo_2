@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import entidad.Persona;
+import negocio.PersonaNegocio;
 import presentacion.vista.PanelAgregarPersonas;
 import presentacion.vista.PanelModificarPersona;
 import presentacion.vista.VentanaPrincipal;
@@ -20,11 +23,14 @@ public class Controlador {
 	private PanelAgregarPersonas pnlAgregarPersonas;
 	private PanelModificarPersona pnlModificarPersona;
 	private DefaultListModel<Persona> listModel;
+	private PersonaNegocio pNeg;
+	private ArrayList<Persona> personasEnTabla;
 	
-	public Controlador(VentanaPrincipal vista, DefaultListModel<Persona> listModel1) {
+	public Controlador(VentanaPrincipal vista, DefaultListModel<Persona> listModel1, PersonaNegocio pNeg) {
 		//Guardo todas las instancias que recibo en el constructor
 		this.ventanaPrincipal = vista;
 		this.listModel = listModel1;
+		this.pNeg = pNeg;
 				
 		//Instancio los paneles
 		this.pnlAgregarPersonas = new PanelAgregarPersonas(listModel);
@@ -82,53 +88,43 @@ public class Controlador {
 		}
 	
 	public void EventoClickBoton_AgregarPesona_PanelAgregarPersonas(ActionEvent a) {
-		
+				
 		JTextField txtNombre = this.pnlAgregarPersonas.getTxtNombre();
-		JLabel validatorNombre = this.pnlAgregarPersonas.getValidatorNombre();
 		JTextField txtApellido = this.pnlAgregarPersonas.getTxtApellido();
-		JLabel validatorApellido = this.pnlAgregarPersonas.getValidatorApellido();
 		JTextField txtDNI = this.pnlAgregarPersonas.getTxtDNI();
-		JLabel validatorDNI = this.pnlAgregarPersonas.getValidatorDNI();
 		JLabel lblSucceed = this.pnlAgregarPersonas.getLblSucceed();
+		Persona persona = new Persona(txtDNI.getText(),txtNombre.getText(),txtApellido.getText());
+		
+		Boolean estado = validarPersona(txtApellido, txtNombre, txtDNI);
+		if(estado) {
+        	if (pNeg.insert(persona)) {
+	        	lblSucceed.setVisible(true);
+	            txtDNI.setText("");
+	            txtApellido.setText("");
+	            txtNombre.setText("");
+        	}
+        	else {
+             	JOptionPane.showMessageDialog(null, "ERROR - DNI REPETIDO.");
+             	txtDNI.setText("");
+             	txtApellido.setText("");
+             	txtNombre.setText("");
+            }
+        }
+    }
+	public Boolean validarPersona (JTextField txtApellido, JTextField txtNombre, JTextField txtDNI) {
+		JLabel validatorNombre = this.pnlAgregarPersonas.getValidatorNombre();
+		JLabel validatorApellido = this.pnlAgregarPersonas.getValidatorApellido();
+		JLabel validatorDNI = this.pnlAgregarPersonas.getValidatorDNI();
 		
 		int bandera = 0;
 		validatorApellido.setText("*");
 		validatorDNI.setText("*");
 		validatorNombre.setText("*");
-        
-        if(txtNombre.getText().isEmpty()) {
-            txtNombre.setBackground(Color.red);
-            validatorNombre.setVisible(true);
-            txtNombre.setText("");
-            bandera++;
-        }
-        else {
-            txtNombre.setBackground(Color.white);
-            validatorNombre.setVisible(false);
-        }
-        
-        if (txtApellido.getText().isEmpty()) {
-            txtApellido.setBackground(Color.red);
-            validatorApellido.setVisible(true);
-            txtApellido.setText("");
-            bandera++;
-        }
-        else {
-            txtApellido.setBackground(Color.WHITE);
-            validatorApellido.setVisible(false);
-        }
-        
-        if(txtDNI.getText().isEmpty()) {
-            txtDNI.setBackground(Color.red);
-            validatorDNI.setVisible(true);
-            txtDNI.setText("");
-            bandera++;
-        }
-        else {
-            txtDNI.setBackground(Color.white);
-            validatorDNI.setVisible(false);
-        }
-        
+		
+		if (!validarTextFields(txtApellido, validatorApellido)) bandera++;
+		if (!validarTextFields(txtNombre, validatorNombre)) bandera++;
+		if (!validarTextFields(txtDNI, validatorDNI)) bandera++;
+
         if(esNumero(txtNombre.getText())) {
         	validatorNombre.setText("El nombre solo debe contener letras.");
         	validatorNombre.setVisible(true);
@@ -145,11 +141,21 @@ public class Controlador {
         	bandera++;
         }
         
-        if(bandera == 0) {
-            lblSucceed.setVisible(true);
-            txtDNI.setText("");
-            txtApellido.setText("");
-            txtNombre.setText("");
+        if(bandera == 0 ) return true;
+        else return false;
+	}
+	
+	public Boolean validarTextFields (JTextField txt, JLabel lbl) {
+		if(txt.getText().isEmpty()) {
+            txt.setBackground(Color.red);
+            lbl.setVisible(true);
+            txt.setText("");
+            return false;
+        }
+		else {
+            txt.setBackground(Color.white);
+            lbl.setVisible(false);
+            return true;
         }
 	}
 	
@@ -163,4 +169,5 @@ public class Controlador {
 	public void inicializar() {
 		this.ventanaPrincipal.setVisible(true);;
 	}
+	
 }

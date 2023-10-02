@@ -1,10 +1,8 @@
 package daoImpl;
 
-import java.awt.List;
 import dao.PersonaDao;
 import entidad.Persona;
 
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

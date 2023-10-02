@@ -1,4 +1,6 @@
 /presentacion/
 /main/
-/negocio/
 /negocioImpl/
+/negocio/
+/dao/
+/daoImpl/
