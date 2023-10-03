@@ -53,4 +53,14 @@ public class NegocioImpl implements PersonaNegocio{
 	public ArrayList<Persona> readAll() {
 		return pdao.readAll();
 	}
+
+	@Override
+	public boolean update(Persona persona, String dniAnterior) {
+		
+		boolean estado=false, repetido;
+        repetido = validarDNIRepetido(persona);
+        if(repetido) return false;
+        estado = pdao.update(persona, dniAnterior);
+        return estado;
+	}
 }

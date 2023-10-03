@@ -10,6 +10,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
+
 import entidad.Persona;
 import negocio.PersonaNegocio;
 import presentacion.vista.PanelAgregarPersonas;
@@ -81,10 +83,7 @@ public class Controlador {
 	}
 	
 	public void  EventoClickMenu_AbrirPanel_ModificarPersona(ActionEvent a, DefaultListModel<Persona> listModel) {
-			personasEnTabla = pNeg.readAll();
-			for (Persona persona : personasEnTabla) {
-				listModel.addElement(persona);
-			}
+			this.refrescarLista();
 			ventanaPrincipal.getContentPane().removeAll();
 			ventanaPrincipal.getContentPane().add(pnlModificarPersona);
 			pnlModificarPersona.setDefaultListModel(listModel);
@@ -98,9 +97,12 @@ public class Controlador {
 		JTextField txtApellido = this.pnlAgregarPersonas.getTxtApellido();
 		JTextField txtDNI = this.pnlAgregarPersonas.getTxtDNI();
 		JLabel lblSucceed = this.pnlAgregarPersonas.getLblSucceed();
+		JLabel validatorNombre = this.pnlAgregarPersonas.getValidatorNombre();
+		JLabel validatorApellido = this.pnlAgregarPersonas.getValidatorApellido();
+		JLabel validatorDNI = this.pnlAgregarPersonas.getValidatorDNI();
 		Persona persona = new Persona(txtDNI.getText(),txtNombre.getText(),txtApellido.getText());
 		
-		Boolean estado = validarPersona(txtApellido, txtNombre, txtDNI);
+		Boolean estado = validarPersona(txtApellido, txtNombre, txtDNI, validatorApellido, validatorNombre, validatorDNI);
 		if(estado) {
         	if (pNeg.insert(persona)) {
 	        	lblSucceed.setVisible(true);
@@ -117,10 +119,7 @@ public class Controlador {
         }
     }
 	
-	public Boolean validarPersona (JTextField txtApellido, JTextField txtNombre, JTextField txtDNI) {
-		JLabel validatorNombre = this.pnlAgregarPersonas.getValidatorNombre();
-		JLabel validatorApellido = this.pnlAgregarPersonas.getValidatorApellido();
-		JLabel validatorDNI = this.pnlAgregarPersonas.getValidatorDNI();
+	public Boolean validarPersona (JTextField txtApellido, JTextField txtNombre, JTextField txtDNI, JLabel validatorApellido, JLabel validatorNombre, JLabel validatorDNI) {
 		
 		int bandera = 0;
 		validatorApellido.setText("*");
@@ -142,7 +141,6 @@ public class Controlador {
         	validatorDNI.setVisible(true);
         	bandera++;
         }
-        
         if(bandera == 0 ) return true;
         else return false;
 	}
@@ -170,11 +168,46 @@ public class Controlador {
 	
 	//MODIFICAR PERSONA
 	public void EventoClickBoton_ModificarPersona_PanelModificarPersona(ActionEvent a) {
+		JTextField txtApellido = pnlModificarPersona.getTxtApellido();
+		JTextField txtNombre = pnlModificarPersona.getTxtNombre();
+		JTextField txtDNI = pnlModificarPersona.getTxtDNI();
+		JLabel lblSucceed = pnlModificarPersona.getLblSucceed();
+		Persona persona = new Persona(txtDNI.getText(),txtNombre.getText(),txtApellido.getText());
+		JLabel validatorApellido = pnlModificarPersona.getLblValidatorApellido();
+		JLabel validatorNombre = pnlModificarPersona.getLblValidatorNombre();
+		JLabel validatorDNI = pnlModificarPersona.getLblValidatorDNI();
 		
+		Boolean estado = validarPersona(txtApellido, txtNombre, txtDNI, validatorApellido, validatorNombre, validatorDNI);
+		if(estado) {
+			String dniAnterior = pnlModificarPersona.getList().getSelectedValue().getDni();
+        	if (pNeg.update(persona, dniAnterior)) {
+	        	lblSucceed.setVisible(true);
+	            txtDNI.setText("");
+	            txtApellido.setText("");
+	            txtNombre.setText("");
+        	}
+        	else {
+             	JOptionPane.showMessageDialog(null, "ERROR - DNI REPETIDO.");
+             	txtDNI.setText("");
+             	txtApellido.setText("");
+             	txtNombre.setText("");
+            }
+        }
+		this.refrescarLista();
 	}
 	
 	public void inicializar() {
 		this.ventanaPrincipal.setVisible(true);;
+	}
+	
+	private void refrescarLista()
+	{
+		listModel.clear();
+		personasEnTabla = pNeg.readAll();
+		for (Persona persona : personasEnTabla) {
+			listModel.addElement(persona);
+		}
+		pnlModificarPersona.setDefaultListModel(listModel);
 	}
 }
 
