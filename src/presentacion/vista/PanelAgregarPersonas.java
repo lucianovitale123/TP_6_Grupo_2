@@ -29,6 +29,7 @@ public class PanelAgregarPersonas extends JPanel {
 	
 	
 	public PanelAgregarPersonas(DefaultListModel<Persona> listModel) {
+		setDefaultListModel(listModel);
 		
 		setLayout(null);
 		setSize(716, 237); 
@@ -86,12 +87,10 @@ public class PanelAgregarPersonas extends JPanel {
 		txtDNI.setBounds(226, 78, 121, 20);
 		txtDNI.setColumns(10);
 		add(txtDNI);
-	
 		
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(169, 141, 120, 37);
-		add(btnAceptar);
-		//btnAceptar.addActionListener(new EventoButtonAceptar(txtNombre, txtApellido,txtDNI,validatorNombre,validatorApellido,validatorDNI,lblSucceed));	
+		add(btnAceptar);	
 	}
 
 	public void setDefaultListModel(DefaultListModel<Persona> listmodelRecibido) {

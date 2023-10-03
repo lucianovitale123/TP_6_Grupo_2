@@ -11,16 +11,27 @@ public class NegocioImpl implements PersonaNegocio{
 	PersonaDao pdao = new PersonaDaoImpl();
 	
 	@Override
+	public boolean validarDNIRepetido(Persona persona) {
+		ArrayList<Persona> listaPersonas;
+		listaPersonas = pdao.readAll();
+		for (Persona per : listaPersonas ) {
+			if(per.getDni().equals(persona.getDni())) {
+				return true;
+			}
+		}
+		return false;	
+	}
+	
+	@Override
 	public boolean insert(Persona persona) {
-		
-		boolean estado=false, repetido;
-		
-		repetido = validarDNIRepetido(persona);
-		if(repetido) return false;
-			
-		estado	= pdao.insert(persona);
-		
-		return estado;
+        
+        boolean estado=false, repetido;
+        
+        repetido = validarDNIRepetido(persona);
+        if(repetido) return false;
+            
+        estado = pdao.insert(persona);
+        return estado;
 	}
 
 	@Override
@@ -41,22 +52,5 @@ public class NegocioImpl implements PersonaNegocio{
 	@Override
 	public ArrayList<Persona> readAll() {
 		return pdao.readAll();
-	}
-	
-	
-	public boolean validarDNIRepetido(Persona persona) {
-		
-        ArrayList<Persona> listaPersonas;
-		
-		listaPersonas = pdao.readAll();
-		
-		for (Persona per : listaPersonas ) {
-			if(per.getDni() == persona.getDni()) {
-				return true;
-			}
-		}
-		
-		return false;
-		
 	}
 }

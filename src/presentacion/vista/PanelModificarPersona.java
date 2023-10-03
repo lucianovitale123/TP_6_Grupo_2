@@ -6,51 +6,102 @@ import javax.swing.JLabel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-
 import entidad.Persona;
 
 public class PanelModificarPersona extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField txtNombre;
+	private JTextField txtApellido;
+	private JTextField txtDNI;
 	private DefaultListModel<Persona> listModel;
+	private JList<Persona> list;
+	private JButton btnModificar;
+	private JLabel lblSeleccion;
 
 	public PanelModificarPersona(DefaultListModel<Persona> listModel) {
+		this.listModel = listModel;
 		
 		setLayout(null);
 		setSize(716, 237); 
 		
-		JList list = new JList();
+		list = new JList<>(listModel);
 		list.setBounds(53, 36, 612, 156);
 		add(list);
 		
-		JLabel lblNewLabel = new JLabel("Seleccione la persona que desea modificar");
-		lblNewLabel.setBounds(53, 11, 256, 14);
-		add(lblNewLabel);
+		lblSeleccion = new JLabel("Seleccione la persona que desea modificar");
+		lblSeleccion.setBounds(53, 11, 256, 14);
+		add(lblSeleccion);
 		
-		JButton btnNewButton = new JButton("Modificar");
-		btnNewButton.setBounds(527, 197, 138, 23);
-		add(btnNewButton);
+		btnModificar = new JButton("Modificar");
+		btnModificar.setBounds(527, 197, 138, 23);
+		add(btnModificar);
 		
-		textField = new JTextField();
-		textField.setBounds(53, 198, 148, 20);
-		add(textField);
-		textField.setColumns(10);
+		txtNombre = new JTextField();
+		txtNombre.setBounds(53, 198, 148, 20);
+		add(txtNombre);
+		txtNombre.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(211, 198, 148, 20);
-		add(textField_1);
-		textField_1.setColumns(10);
+		txtApellido = new JTextField();
+		txtApellido.setBounds(211, 198, 148, 20);
+		add(txtApellido);
+		txtApellido.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(369, 198, 148, 20);
-		add(textField_2);
-		textField_2.setColumns(10);
-
+		txtDNI = new JTextField();
+		txtDNI.setBounds(369, 198, 148, 20);
+		add(txtDNI);
+		txtDNI.setColumns(10);
 	}
 	
+	
+	public JTextField getTxtNombre() {
+		return txtNombre;
+	}
+
+	public void setTxtNombre(JTextField txtNombre) {
+		this.txtNombre = txtNombre;
+	}
+
+	public JTextField getTxtApellido() {
+		return txtApellido;
+	}
+
+	public void setTxtApellido(JTextField txtApellido) {
+		this.txtApellido = txtApellido;
+	}
+
+	public JTextField getTxtDNI() {
+		return txtDNI;
+	}
+
+	public void setTxtDNI(JTextField txtDNI) {
+		this.txtDNI = txtDNI;
+	}
+
+	public JList<Persona> getList() {
+		return list;
+	}
+
+	public void setList(JList<Persona> list) {
+		this.list = list;
+	}
+	
+	public JButton getBtnModificar() {
+		return btnModificar;
+	}
+
+	public void setBtnModificar(JButton btnModificar) {
+		this.btnModificar = btnModificar;
+	}
+
+	public JLabel getLblSeleccionar() {
+		return lblSeleccion;
+	}
+
+	public void setLblSeleccionar(JLabel lblSeleccion) {
+		this.lblSeleccion = lblSeleccion;
+	}
+
 	public void setDefaultListModel(DefaultListModel<Persona> listmodelRecibido) {
 		this.listModel = listmodelRecibido;
 	}

@@ -10,7 +10,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
 import entidad.Persona;
 import negocio.PersonaNegocio;
 import presentacion.vista.PanelAgregarPersonas;
@@ -36,13 +35,12 @@ public class Controlador {
 		this.pnlAgregarPersonas = new PanelAgregarPersonas(listModel);
 		this.pnlModificarPersona = new PanelModificarPersona(listModel);
 		
-		//Enlazo todos los eventos
-		//Eventos del menu VentanaPrincipal
+		//Eventos VentanaPrincipal
 		this.ventanaPrincipal.getMntmAgregar().addActionListener(a->EventoClickMenu_AbrirPanel_AgregarPersona(a, listModel));
 		this.ventanaPrincipal.getMntmModificar().addActionListener(a->EventoClickMenu_AbrirPanel_ModificarPersona(a, listModel));
 		
 		//Eventos PnlAgregarPersonas
-		this.pnlAgregarPersonas.getBtnAceptar().addActionListener(b->EventoClickBoton_AgregarPesona_PanelAgregarPersonas(b));
+		this.pnlAgregarPersonas.getBtnAceptar().addActionListener(b->EventoClickBoton_AgregarPesona_PanelAgregarPersonas(b, listModel));
 		this.pnlAgregarPersonas.getTxtNombre().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -68,10 +66,13 @@ public class Controlador {
 			}
 		});
 		
+		//Eventos PnlModificarPersonas
+		this.pnlModificarPersona.getBtnModificar().addActionListener(a->EventoClickBoton_ModificarPersona_PanelModificarPersona(a));
 	}
 	
+	
+	//AGREGAR PERSONA
 	public void  EventoClickMenu_AbrirPanel_AgregarPersona(ActionEvent a, DefaultListModel<Persona> listModel) {
-		
 		ventanaPrincipal.getContentPane().removeAll();
 		ventanaPrincipal.getContentPane().add(pnlAgregarPersonas);
 		pnlAgregarPersonas.setDefaultListModel(listModel);
@@ -80,6 +81,10 @@ public class Controlador {
 	}
 	
 	public void  EventoClickMenu_AbrirPanel_ModificarPersona(ActionEvent a, DefaultListModel<Persona> listModel) {
+			personasEnTabla = pNeg.readAll();
+			for (Persona persona : personasEnTabla) {
+				listModel.addElement(persona);
+			}
 			ventanaPrincipal.getContentPane().removeAll();
 			ventanaPrincipal.getContentPane().add(pnlModificarPersona);
 			pnlModificarPersona.setDefaultListModel(listModel);
@@ -87,7 +92,7 @@ public class Controlador {
 			ventanaPrincipal.getContentPane().revalidate();		
 		}
 	
-	public void EventoClickBoton_AgregarPesona_PanelAgregarPersonas(ActionEvent a) {
+	public void EventoClickBoton_AgregarPesona_PanelAgregarPersonas(ActionEvent a, DefaultListModel<Persona> listModel) {
 				
 		JTextField txtNombre = this.pnlAgregarPersonas.getTxtNombre();
 		JTextField txtApellido = this.pnlAgregarPersonas.getTxtApellido();
@@ -111,6 +116,7 @@ public class Controlador {
             }
         }
     }
+	
 	public Boolean validarPersona (JTextField txtApellido, JTextField txtNombre, JTextField txtDNI) {
 		JLabel validatorNombre = this.pnlAgregarPersonas.getValidatorNombre();
 		JLabel validatorApellido = this.pnlAgregarPersonas.getValidatorApellido();
@@ -125,11 +131,7 @@ public class Controlador {
 		if (!validarTextFields(txtNombre, validatorNombre)) bandera++;
 		if (!validarTextFields(txtDNI, validatorDNI)) bandera++;
 
-        if(esNumero(txtNombre.getText())) {
-        	validatorNombre.setText("El nombre solo debe contener letras.");
-        	validatorNombre.setVisible(true);
-        	bandera++;
-        }
+      
         if(esNumero(txtApellido.getText())) {
         	validatorApellido.setText("El apellido solo debe contener letras.");
         	validatorApellido.setVisible(true);
@@ -166,8 +168,39 @@ public class Controlador {
 		else return false;
 	}
 	
+	//MODIFICAR PERSONA
+	public void EventoClickBoton_ModificarPersona_PanelModificarPersona(ActionEvent a) {
+		
+	}
+	
 	public void inicializar() {
 		this.ventanaPrincipal.setVisible(true);;
 	}
-	
 }
+
+
+/*this.pnlAgregarPersonas.getTxtNombre().addKeyListener(new KeyListener() {        
+@Override
+public void keyPressed(KeyEvent arg0) {
+	pnlAgregarPersonas.getTxtNombre().setBackground(Color.WHITE);
+	pnlAgregarPersonas.getValidatorNombre().setVisible(false);
+	pnlAgregarPersonas.getLblSucceed().setVisible(false);
+}
+@Override
+public void keyReleased(KeyEvent arg0) {
+	if(pnlAgregarPersonas.getTxtNombre().getText().isEmpty()) {
+		pnlAgregarPersonas.getTxtNombre().setBackground(Color.red);
+		pnlAgregarPersonas.getValidatorNombre().setVisible(true);
+		pnlAgregarPersonas.getTxtNombre().setText("");
+    }
+}
+@Override
+public void keyTyped(KeyEvent arg0) {
+	if(esNumero(pnlAgregarPersonas.getTxtNombre().getText())) {
+    	pnlAgregarPersonas.getValidatorNombre().setText("El nombre solo debe contener letras.");
+    	pnlAgregarPersonas.getValidatorNombre().setVisible(true);
+    	bandera++;
+    }
+	else pnlAgregarPersonas.getValidatorNombre().setText("");
+}
+});*/

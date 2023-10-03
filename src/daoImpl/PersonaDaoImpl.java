@@ -16,26 +16,22 @@ public class PersonaDaoImpl implements PersonaDao {
 	private static final String readall = "SELECT * FROM personas";
 	
 
-	public boolean insert(Persona persona)
-	{
+	public boolean insert(Persona persona) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isInsertExitoso = false;
-		try
-		{
+		try {
 			statement = conexion.prepareStatement(insert);
 			statement.setString(1, persona.getDni());
 			statement.setString(2, persona.getNombre());
 			statement.setString(3, persona.getApellido());
 			
-			if(statement.executeUpdate() > 0)
-			{
+			if(statement.executeUpdate() > 0) {
 				conexion.commit();
 				isInsertExitoso = true;
 			}
 		}
-		catch (SQLException e) 
-		{
+		catch (SQLException e) {
 			e.printStackTrace();
 			try {
 				conexion.rollback();
@@ -47,52 +43,43 @@ public class PersonaDaoImpl implements PersonaDao {
 		return isInsertExitoso;
 	}
 	
-	public boolean delete(Persona persona_a_eliminar)
-	{
+	public boolean delete(Persona persona_a_eliminar) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isdeleteExitoso = false;
-		try 
-		{
+		try {
 			statement = conexion.prepareStatement(delete);
 			statement.setString(1,persona_a_eliminar.getDni());
-			if(statement.executeUpdate() > 0)
-			{
+			if(statement.executeUpdate() > 0) {
 				conexion.commit();
 				isdeleteExitoso = true;
 			}
 		} 
-		catch (SQLException e) 
-		{
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return isdeleteExitoso;
 	}
 	
-	public ArrayList<Persona> readAll()
-	{
+	public ArrayList<Persona> readAll() {
 		PreparedStatement statement;
 		ResultSet resultSet; //Guarda el resultado de la query
 		ArrayList<Persona> personas = new ArrayList<Persona>();
 		Conexion conexion = Conexion.getConexion();
-		try 
-		{
+		try {
 			statement = conexion.getSQLConexion().prepareStatement(readall);
 			resultSet = statement.executeQuery();
-			while(resultSet.next())
-			{
+			while(resultSet.next()) {
 				personas.add(getPersona(resultSet));
 			}
 		} 
-		catch (SQLException e) 
-		{
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return personas;
 	}
 	
-	private Persona getPersona(ResultSet resultSet) throws SQLException
-	{
+	private Persona getPersona(ResultSet resultSet) throws SQLException {
 		String dni = resultSet.getString("Dni");
 		String nombre = resultSet.getString("Nombre");
 		String tel = resultSet.getString("Apellido");
