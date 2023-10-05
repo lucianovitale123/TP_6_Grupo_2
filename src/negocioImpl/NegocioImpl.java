@@ -1,6 +1,11 @@
 package negocioImpl;
 
 import java.util.ArrayList;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 import dao.PersonaDao;
 import daoImpl.PersonaDaoImpl;
 import entidad.Persona;
@@ -62,5 +67,54 @@ public class NegocioImpl implements PersonaNegocio{
         if(repetido) return false;
         estado = pdao.update(persona, dniAnterior);
         return estado;
+	}
+	@Override
+	public Boolean esNumero(String campo) {
+		if(campo.matches("[0-9]+")) {
+			return true;
+		}
+		else return false;
+	}
+	
+	@Override
+	public Boolean validarTextFields2 (JTextField nombre,JTextField apellido,JTextField dni) {
+		if(nombre.getText().isEmpty() || apellido.getText().isEmpty() || dni.getText().isEmpty()) {
+            
+            nombre.setText("");
+            apellido.setText("");
+            dni.setText("");
+            return false;
+        }
+		else if(esNumero(dni.getText())&& !esNumero(apellido.getText())&&!esNumero(nombre.getText())) {
+            return true;
+        }else {return false;}
+	}
+	
+	@Override
+	public Boolean validarPersona (JTextField txtApellido, JTextField txtNombre, JTextField txtDNI, JLabel validatorApellido, JLabel validatorNombre, JLabel validatorDNI) {
+		
+		validatorApellido.setText("*");
+		validatorDNI.setText("*");
+		validatorNombre.setText("*");
+		
+		if (validarTextFields2(txtApellido, txtNombre, txtDNI)) {
+			return true;
+		}else{return false;}
+
+	}
+	
+	@Override
+	public Boolean validarPersonaModificar (JTextField txtApellido, JTextField txtNombre, JTextField txtDNI, JLabel validatorApellido, JLabel validatorNombre, JLabel validatorDNI,JLabel lbl) {
+		
+		validatorApellido.setText("*");
+		validatorDNI.setText("*");
+		validatorNombre.setText("*");
+		
+		if (validarTextFields2(txtApellido, txtNombre, txtDNI)) {
+			return true;
+		}else{
+			lbl.setVisible(false);
+			return false;
+			}
 	}
 }
