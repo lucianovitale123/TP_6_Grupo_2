@@ -15,6 +15,7 @@ import javax.swing.ListModel;
 import entidad.Persona;
 import negocio.PersonaNegocio;
 import presentacion.vista.PanelAgregarPersonas;
+import presentacion.vista.PanelListarPersonas;
 import presentacion.vista.PanelModificarPersona;
 import presentacion.vista.VentanaPrincipal;
 
@@ -23,6 +24,7 @@ public class Controlador {
 	private VentanaPrincipal ventanaPrincipal;
 	private PanelAgregarPersonas pnlAgregarPersonas;
 	private PanelModificarPersona pnlModificarPersona;
+	private PanelListarPersonas pnlListarPersonas;
 	private DefaultListModel<Persona> listModel;
 	private PersonaNegocio pNeg;
 	private ArrayList<Persona> personasEnTabla;
@@ -36,10 +38,12 @@ public class Controlador {
 		//Instancio los paneles
 		this.pnlAgregarPersonas = new PanelAgregarPersonas(listModel);
 		this.pnlModificarPersona = new PanelModificarPersona(listModel);
+		this.pnlListarPersonas = new PanelListarPersonas();
 		
 		//Eventos VentanaPrincipal
 		this.ventanaPrincipal.getMntmAgregar().addActionListener(a->EventoClickMenu_AbrirPanel_AgregarPersona(a, listModel));
 		this.ventanaPrincipal.getMntmModificar().addActionListener(a->EventoClickMenu_AbrirPanel_ModificarPersona(a, listModel));
+		this.ventanaPrincipal.getMntmListar().addActionListener(a->EventoClickMenu_AbrirPanel_ListarPersona(a));
 		
 		//Eventos PnlAgregarPersonas
 		this.pnlAgregarPersonas.getBtnAceptar().addActionListener(b->EventoClickBoton_AgregarPesona_PanelAgregarPersonas(b, listModel));
@@ -90,6 +94,14 @@ public class Controlador {
 			ventanaPrincipal.getContentPane().repaint();
 			ventanaPrincipal.getContentPane().revalidate();		
 		}
+	
+	public void  EventoClickMenu_AbrirPanel_ListarPersona(ActionEvent a) {
+		this.refrescarTabla();
+		ventanaPrincipal.getContentPane().removeAll();
+		ventanaPrincipal.getContentPane().add(pnlListarPersonas);
+		ventanaPrincipal.getContentPane().repaint();
+		ventanaPrincipal.getContentPane().revalidate();		
+	}
 	
 	public void EventoClickBoton_AgregarPesona_PanelAgregarPersonas(ActionEvent a, DefaultListModel<Persona> listModel) {
 				
@@ -208,6 +220,12 @@ public class Controlador {
 			listModel.addElement(persona);
 		}
 		pnlModificarPersona.setDefaultListModel(listModel);
+	}
+	
+	private void refrescarTabla()
+	{
+		this.personasEnTabla = (ArrayList<Persona>) pNeg.readAll();
+		this.pnlListarPersonas.llenarTabla(this.personasEnTabla);
 	}
 }
 
