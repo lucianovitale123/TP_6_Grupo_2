@@ -63,6 +63,7 @@ public class PanelModificarPersona extends JPanel {
 		txtDNI.setBounds(383, 198, 148, 20);
 		add(txtDNI);
 		txtDNI.setColumns(10);
+		txtDNI.setEditable(false);
 		
 		lblSucceed = new JLabel("Persona modificada con éxito.");
 		lblSucceed.setForeground(Color.GREEN);

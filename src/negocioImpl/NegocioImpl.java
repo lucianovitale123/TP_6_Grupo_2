@@ -33,9 +33,16 @@ public class NegocioImpl implements PersonaNegocio{
         boolean estado=false, repetido;
         
         repetido = validarDNIRepetido(persona);
-        if(repetido) return false;
+        if(repetido) {
+        	JOptionPane.showMessageDialog(null, "ERROR - DNI REPETIDO.");
+        	return false;
+        }
             
-        estado = pdao.insert(persona);
+        if(!persona.getNombre().isEmpty() && !persona.getApellido().isEmpty() && !persona.getDni().isEmpty()) {
+        	if(esNumero(persona.getDni()) && !esNumero(persona.getApellido())&&!esNumero(persona.getNombre())) {
+        	estado = pdao.insert(persona);
+        	}
+		}
         return estado;
 	}
 
@@ -61,14 +68,15 @@ public class NegocioImpl implements PersonaNegocio{
 
 	@Override
 	public boolean update(Persona persona, String dniAnterior) {
-		
-		boolean estado=false, repetido;
-        repetido = validarDNIRepetido(persona);
-        if(repetido) return false;
-        estado = pdao.update(persona, dniAnterior);
+		boolean estado = false;
+        if(!persona.getNombre().isEmpty() && !persona.getApellido().isEmpty() && !persona.getDni().isEmpty()) {
+        	if(esNumero(persona.getDni()) && !esNumero(persona.getApellido())&&!esNumero(persona.getNombre())) {
+        		estado = pdao.update(persona, dniAnterior);
+        	}
+		}
         return estado;
 	}
-	@Override
+	
 	public Boolean esNumero(String campo) {
 		if(campo.matches("[0-9]+")) {
 			return true;
@@ -76,45 +84,37 @@ public class NegocioImpl implements PersonaNegocio{
 		else return false;
 	}
 	
-	@Override
-	public Boolean validarTextFields2 (JTextField nombre,JTextField apellido,JTextField dni) {
-		if(nombre.getText().isEmpty() || apellido.getText().isEmpty() || dni.getText().isEmpty()) {
-            
-            nombre.setText("");
-            apellido.setText("");
-            dni.setText("");
-            return false;
-        }
-		else if(esNumero(dni.getText())&& !esNumero(apellido.getText())&&!esNumero(nombre.getText())) {
-            return true;
-        }else {return false;}
-	}
-	
-	@Override
-	public Boolean validarPersona (JTextField txtApellido, JTextField txtNombre, JTextField txtDNI, JLabel validatorApellido, JLabel validatorNombre, JLabel validatorDNI) {
+	/*public Boolean validarPersona (JTextField txtApellido, JTextField txtNombre, JTextField txtDNI, JLabel validatorApellido, JLabel validatorNombre, JLabel validatorDNI) {
 		
 		validatorApellido.setText("*");
 		validatorDNI.setText("*");
 		validatorNombre.setText("*");
 		
-		if (validarTextFields2(txtApellido, txtNombre, txtDNI)) {
-			return true;
-		}else{return false;}
-
+		if(txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtDNI.getText().isEmpty()) {
+            txtNombre.setText("");
+            txtApellido.setText("");
+            txtDNI.setText("");
+            return false;
+        }
+		else if(esNumero(txtDNI.getText())&& !esNumero(txtApellido.getText())&&!esNumero(txtNombre.getText())) {
+            return true;
+        }else {return false;}
 	}
 	
-	@Override
 	public Boolean validarPersonaModificar (JTextField txtApellido, JTextField txtNombre, JTextField txtDNI, JLabel validatorApellido, JLabel validatorNombre, JLabel validatorDNI,JLabel lbl) {
 		
 		validatorApellido.setText("*");
 		validatorDNI.setText("*");
 		validatorNombre.setText("*");
 		
-		if (validarTextFields2(txtApellido, txtNombre, txtDNI)) {
-			return true;
-		}else{
-			lbl.setVisible(false);
-			return false;
-			}
-	}
+		if(txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty()) {
+            txtNombre.setText("");
+            txtApellido.setText("");
+            txtDNI.setText("");
+            return false;
+        }
+		else if(!esNumero(txtApellido.getText())&&!esNumero(txtNombre.getText())) {
+            return true;
+        }else {return false;}
+	}*/
 }
