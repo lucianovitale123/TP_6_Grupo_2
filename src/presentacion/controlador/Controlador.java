@@ -232,8 +232,6 @@ public class Controlador {
 		}
 		pnlModificarPersona.setDefaultListModel(listModel);
 	}
-<<<<<<< HEAD
-=======
 	
 	private void refrescarTabla()
 	{
@@ -241,6 +239,5 @@ public class Controlador {
 		this.pnlListarPersonas.llenarTabla(this.personasEnTabla);
 	}
 }
->>>>>>> 7661dd463699567383c77e99e2bb22d81a7c6a40
 
-}
+
