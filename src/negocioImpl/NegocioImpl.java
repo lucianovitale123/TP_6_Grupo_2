@@ -1,11 +1,6 @@
 package negocioImpl;
 
 import java.util.ArrayList;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
 import dao.PersonaDao;
 import daoImpl.PersonaDaoImpl;
 import entidad.Persona;
@@ -76,6 +71,7 @@ public class NegocioImpl implements PersonaNegocio{
 		}
         return estado;
 	}
+<<<<<<< HEAD
 	
 	public Boolean esNumero(String campo) {
 		if(campo.matches("[0-9]+")) {
@@ -117,4 +113,6 @@ public class NegocioImpl implements PersonaNegocio{
             return true;
         }else {return false;}
 	}*/
+=======
+>>>>>>> origin/main
 }

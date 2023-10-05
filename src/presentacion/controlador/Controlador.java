@@ -17,6 +17,7 @@ import javax.swing.event.ListSelectionListener;
 import entidad.Persona;
 import negocio.PersonaNegocio;
 import presentacion.vista.PanelAgregarPersonas;
+import presentacion.vista.PanelEliminarPersonas;
 import presentacion.vista.PanelListarPersonas;
 import presentacion.vista.PanelModificarPersona;
 import presentacion.vista.VentanaPrincipal;
@@ -26,6 +27,7 @@ public class Controlador {
 	private VentanaPrincipal ventanaPrincipal;
 	private PanelAgregarPersonas pnlAgregarPersonas;
 	private PanelModificarPersona pnlModificarPersona;
+	private PanelEliminarPersonas pnlEliminarPersonas;
 	private PanelListarPersonas pnlListarPersonas;
 	private DefaultListModel<Persona> listModel;
 	private PersonaNegocio pNeg;
@@ -40,11 +42,13 @@ public class Controlador {
 		//Instancio los paneles
 		this.pnlAgregarPersonas = new PanelAgregarPersonas(listModel);
 		this.pnlModificarPersona = new PanelModificarPersona(listModel);
+		this.pnlEliminarPersonas = new PanelEliminarPersonas(listModel);
 		this.pnlListarPersonas = new PanelListarPersonas();
 		
 		//Eventos VentanaPrincipal
 		this.ventanaPrincipal.getMntmAgregar().addActionListener(a->EventoClickMenu_AbrirPanel_AgregarPersona(a, listModel));
 		this.ventanaPrincipal.getMntmModificar().addActionListener(a->EventoClickMenu_AbrirPanel_ModificarPersona(a, listModel));
+		this.ventanaPrincipal.getMntmEliminar().addActionListener(a->EventoClickMenu_AbrirPanel_EliminarPersonas(a, listModel));
 		this.ventanaPrincipal.getMntmListar().addActionListener(a->EventoClickMenu_AbrirPanel_ListarPersona(a));
 		
 		//Eventos PnlAgregarPersonas
@@ -103,6 +107,15 @@ public class Controlador {
 			pnlModificarPersona.setDefaultListModel(listModel);
 			ventanaPrincipal.getContentPane().repaint();
 			ventanaPrincipal.getContentPane().revalidate();		
+	}
+	
+	public void  EventoClickMenu_AbrirPanel_EliminarPersonas(ActionEvent a, DefaultListModel<Persona> listModel) {
+		
+		ventanaPrincipal.getContentPane().removeAll();
+		ventanaPrincipal.getContentPane().add(pnlEliminarPersonas);
+		pnlEliminarPersonas.setDefaultListModel(listModel);
+		ventanaPrincipal.getContentPane().repaint();
+		ventanaPrincipal.getContentPane().revalidate();		
 	}
 	
 	public void  EventoClickMenu_AbrirPanel_ListarPersona(ActionEvent a) {
@@ -207,6 +220,7 @@ public class Controlador {
 		this.pnlListarPersonas.llenarTabla(this.personasEnTabla);
 	}
 	
+<<<<<<< HEAD
 	private void EventoTecla(JTextField txt, JLabel validator, String mensaje) {
 		if(txt.getText().isEmpty()) {
 			txt.setBackground(Color.red);
@@ -241,3 +255,17 @@ public class Controlador {
 		else validator.setText("");
 	}
 }
+=======
+	
+	//Eliminar PERSONA
+		public void EventoClickBoton_EliminarPersona_PanelEliminarPersonas(ActionEvent a) {
+			
+			JLabel lblSucceed = pnlEliminarPersonas.getLblSucceed();
+					
+			
+		
+}
+		}
+
+
+>>>>>>> origin/main
