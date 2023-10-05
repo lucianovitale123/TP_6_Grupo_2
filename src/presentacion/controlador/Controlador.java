@@ -26,6 +26,7 @@ public class Controlador {
 	private VentanaPrincipal ventanaPrincipal;
 	private PanelAgregarPersonas pnlAgregarPersonas;
 	private PanelModificarPersona pnlModificarPersona;
+	private PanelModificarPersona pnlEliminarPersonas;
 	private PanelListarPersonas pnlListarPersonas;
 	private DefaultListModel<Persona> listModel;
 	private PersonaNegocio pNeg;
@@ -40,6 +41,7 @@ public class Controlador {
 		//Instancio los paneles
 		this.pnlAgregarPersonas = new PanelAgregarPersonas(listModel);
 		this.pnlModificarPersona = new PanelModificarPersona(listModel);
+		this.pnlEliminarPersonas = new PanelModificarPersona(listModel);
 		this.pnlListarPersonas = new PanelListarPersonas();
 		
 		//Eventos VentanaPrincipal
@@ -238,6 +240,18 @@ public class Controlador {
 		this.personasEnTabla = (ArrayList<Persona>) pNeg.readAll();
 		this.pnlListarPersonas.llenarTabla(this.personasEnTabla);
 	}
+	
+	
+	//Eliminar PERSONA
+		public void EventoClickBoton_EliminarPersona_PanelEliminarPersonas(ActionEvent a) {
+			JTextField txtApellido = pnlEliminarPersonas.getTxtApellido();
+			JTextField txtNombre = pnlEliminarPersonas.getTxtNombre();
+			JTextField txtDNI = pnlEliminarPersonas.getTxtDNI();
+			JLabel lblSucceed = pnlEliminarPersonas.getLblSucceed();
+			Persona persona = new Persona(txtDNI.getText(),txtNombre.getText(),txtApellido.getText());			
+			
+		
 }
+		}
 
 
