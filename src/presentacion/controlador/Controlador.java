@@ -15,6 +15,7 @@ import javax.swing.ListModel;
 import entidad.Persona;
 import negocio.PersonaNegocio;
 import presentacion.vista.PanelAgregarPersonas;
+import presentacion.vista.PanelEliminarPersonas;
 import presentacion.vista.PanelModificarPersona;
 import presentacion.vista.VentanaPrincipal;
 
@@ -23,6 +24,7 @@ public class Controlador {
 	private VentanaPrincipal ventanaPrincipal;
 	private PanelAgregarPersonas pnlAgregarPersonas;
 	private PanelModificarPersona pnlModificarPersona;
+	private PanelEliminarPersonas pnlEliminarPersonas;
 	private DefaultListModel<Persona> listModel;
 	private PersonaNegocio pNeg;
 	private ArrayList<Persona> personasEnTabla;
@@ -210,6 +212,8 @@ public class Controlador {
 		pnlModificarPersona.setDefaultListModel(listModel);
 	}
 }
+
+/// ELIMINAR PERSONA:
 
 
 /*this.pnlAgregarPersonas.getTxtNombre().addKeyListener(new KeyListener() {        

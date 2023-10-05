@@ -1,0 +1,68 @@
+diff a/src/negocioImpl/NegocioImpl.java b/src/negocioImpl/NegocioImpl.java	(rejected hunks)
+@@ -1,24 +1,59 @@
+ package negocioImpl;
+ 
+-import java.awt.List;
++import java.util.ArrayList;
+ 
++import dao.PersonaDao;
++import daoImpl.PersonaDaoImpl;
+ import entidad.Persona;
+ import negocio.PersonaNegocio;
+ 
+-public class NegocioImpl implements PersonaNegocio {
++public class NegocioImpl implements PersonaNegocio{
+ 
++	PersonaDao pdao = new PersonaDaoImpl();
++	
+ 	@Override
+ 	public boolean insert(Persona persona) {
+-		return false;
++		
++		boolean estado=false, repetido;
++		
++		repetido = validarDNIRepetido(persona);
++		if(repetido) return false;
++			
++		estado	= pdao.insert(persona);
++		
++		return estado;
+ 	}
+ 
+ 	@Override
+-	public boolean delete(Persona persona) {
+-		return false;
++	public boolean delete(Persona persona_a_eliminar) {
++		boolean estado=false;
++		if(persona_a_eliminar.getDni().length() > 0 )//LOGICA
++		{
++			estado=pdao.delete(persona_a_eliminar);
++		}
++		return estado;
+ 	}
+ 
+ 	@Override
+-	public List readAll() {
+-		return null;
++	public ArrayList<Persona> readAll() {
++		return pdao.readAll();
+ 	}
++	
++	
++	public boolean validarDNIRepetido(Persona persona) {
++		
++        ArrayList<Persona> listaPersonas;
++		
++		listaPersonas = pdao.readAll();
++		
++		for (Persona per : listaPersonas ) {
++			if(per.getDni() == persona.getDni()) {
++				return true;
++			}
++		}
++		
++		return false;
++		
++	}
++
+ }
