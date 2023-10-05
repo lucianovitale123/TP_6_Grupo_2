@@ -12,20 +12,16 @@ import java.awt.Color;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelEliminarPersonas extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JTextField txtNombre;
-	private JTextField txtApellido;
-	private JTextField txtDNI;
 	private DefaultListModel<Persona> listModel;
 	private JList<Persona> list;
-	private JButton btnModificar;
+	private JButton btnEliminar;
 	private JLabel lblSeleccion;
 	private JLabel lblSucceed;
-	private JLabel lblValidatorNombre;
-	private JLabel lblValidatorApellido;
-	private JLabel lblValidatorDNI;
 
 	public PanelEliminarPersonas(DefaultListModel<Persona> listModel) {
 		this.listModel = listModel;
@@ -37,84 +33,33 @@ public class PanelEliminarPersonas extends JPanel {
 		list.setBounds(53, 36, 612, 156);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getViewport().setView(list);
-		scrollPane.setBounds(63, 36, 612, 156);
+		scrollPane.setBounds(196, 36, 256, 156);
 		add(scrollPane);
 		//add(list);
 		
 		lblSeleccion = new JLabel("Seleccione la persona que desea eliminar");
-		lblSeleccion.setBounds(53, 11, 256, 14);
+		lblSeleccion.setBounds(229, 11, 204, 14);
 		add(lblSeleccion);
 		
-		btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(537, 197, 138, 23);
-		add(btnModificar);
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnEliminar.setBounds(258, 208, 138, 23);
+		add(btnEliminar);
 		
-		txtNombre = new JTextField();
-		txtNombre.setBounds(63, 198, 148, 20);
-		add(txtNombre);
-		txtNombre.setColumns(10);
-		
-		txtApellido = new JTextField();
-		txtApellido.setBounds(225, 198, 148, 20);
-		add(txtApellido);
-		txtApellido.setColumns(10);
-		
-		txtDNI = new JTextField();
-		txtDNI.setBounds(383, 198, 148, 20);
-		add(txtDNI);
-		txtDNI.setColumns(10);
-		
-		lblSucceed = new JLabel("Persona modificada con éxito.");
+		lblSucceed = new JLabel("Persona eliminada con éxito.");
 		lblSucceed.setForeground(Color.GREEN);
-		lblSucceed.setBounds(225, 242, 281, 14);
+		lblSucceed.setBounds(258, 242, 154, 14);
 		lblSucceed.setVisible(false);
 		add(lblSucceed);
-		
-		lblValidatorNombre = new JLabel("*");
-		lblValidatorNombre.setForeground(Color.RED);
-		lblValidatorNombre.setBounds(63, 218, 148, 14);
-		lblValidatorNombre.setVisible(false);
-		add(lblValidatorNombre);
-		
-		lblValidatorApellido = new JLabel("*");
-		lblValidatorApellido.setForeground(Color.RED);
-		lblValidatorApellido.setBounds(225, 218, 148, 14);
-		lblValidatorApellido.setVisible(false);
-		add(lblValidatorApellido);
-		
-		lblValidatorDNI = new JLabel("*");
-		lblValidatorDNI.setForeground(Color.RED);
-		lblValidatorDNI.setBounds(383, 218, 148, 14);
-		lblValidatorDNI.setVisible(false);
-		add(lblValidatorDNI);
 	
 	
 
 	
 }
-	public JTextField getTxtNombre() {
-		return txtNombre;
-	}
-
-	public void setTxtNombre(JTextField txtNombre) {
-		this.txtNombre = txtNombre;
-	}
-
-	public JTextField getTxtApellido() {
-		return txtApellido;
-	}
-
-	public void setTxtApellido(JTextField txtApellido) {
-		this.txtApellido = txtApellido;
-	}
-
-	public JTextField getTxtDNI() {
-		return txtDNI;
-	}
-
-	public void setTxtDNI(JTextField txtDNI) {
-		this.txtDNI = txtDNI;
-	}
+	
 
 	public JList<Persona> getList() {
 		return list;
@@ -125,11 +70,11 @@ public class PanelEliminarPersonas extends JPanel {
 	}
 	
 	public JButton getBtnModificar() {
-		return btnModificar;
+		return btnEliminar;
 	}
 
 	public void setBtnModificar(JButton btnModificar) {
-		this.btnModificar = btnModificar;
+		this.btnEliminar = btnModificar;
 	}
 
 	public JLabel getLblSeleccion() {
@@ -156,27 +101,5 @@ public class PanelEliminarPersonas extends JPanel {
 		this.lblSucceed = lblSucceed;
 	}
 
-	public JLabel getLblValidatorNombre() {
-		return lblValidatorNombre;
-	}
 
-	public void setLblValidatorNombre(JLabel lblValidatorNombre) {
-		this.lblValidatorNombre = lblValidatorNombre;
-	}
-
-	public JLabel getLblValidatorApellido() {
-		return lblValidatorApellido;
-	}
-
-	public void setLblValidatorApellido(JLabel lblValidatorApellido) {
-		this.lblValidatorApellido = lblValidatorApellido;
-	}
-
-	public JLabel getLblValidatorDNI() {
-		return lblValidatorDNI;
-	}
-
-	public void setLblValidatorDNI(JLabel lblValidatorDNI) {
-		this.lblValidatorDNI = lblValidatorDNI;
-	}
 }
